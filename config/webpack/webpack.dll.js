@@ -19,7 +19,6 @@ const dllConfig = pkg.dllPlugin;
 const outputPath = join(process.cwd(), dllConfig.path);
 
 module.exports = require('./webpack.base')({
-  context: process.cwd(),
   entry: dllConfig.dlls,
   devtool: 'eval',
   output: {

@@ -3,7 +3,7 @@ const path = require('path');
 const fs = require('fs');
 const defaults = require('lodash/defaultsDeep');
 
-module.exports = function () {
+module.exports = async function () {
   const exists = fs.existsSync;
   const writeFile = fs.writeFileSync;
 
@@ -43,7 +43,7 @@ module.exports = function () {
 
   // the BUILDING_DLL env var is set to avoid confusing the development environment
   const cfg = path.resolve(__dirname, '../config/webpack/webpack.dll.js');
-  exec(
-    `node ${path.resolve(__dirname, '../node_modules/.bin')}/cross-env BUILDING_DLL=true webpack --display-chunks --color --config ${cfg} --hide-modules`,
-  );
+
+  const { compile } = require('../lib/build-utils/webpack');
+  await compile(require(cfg))
 };

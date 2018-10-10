@@ -44,6 +44,6 @@ module.exports = function () {
   // the BUILDING_DLL env var is set to avoid confusing the development environment
   const cfg = path.resolve(__dirname, '../config/webpack/webpack.dll.js');
   exec(
-    `cross-env BUILDING_DLL=true webpack --display-chunks --color --config ${cfg} --hide-modules`,
+    `node ${path.resolve(__dirname, '../node_modules/.bin')}/cross-env BUILDING_DLL=true webpack --display-chunks --color --config ${cfg} --hide-modules`,
   );
 };

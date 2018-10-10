@@ -4,13 +4,11 @@
   "description": "react development env",
   "main": "index.js",
   "scripts": {
-    "analyze": "mete-analyze",
-    "test": "cross-env NODE_ENV=test jest --coverage",
-    "build": "mete-build",
-    "dev": "mete-dev",
-    "dll": "cross-env node ./scripts/dll.js",
-    "server": "mete-server",
-    "stats": "cross-env NODE_ENV=production webpack --config config/webpack/webpack.prod.babel.js --profile --json > stats.json"
+    "analyze": "mete analyze",
+    "build": "mete build",
+    "dev": "mete dev",
+    "dll": "mete dll",
+    "server": "mete server"
   },
   "sideEffects": [
     "*.css"

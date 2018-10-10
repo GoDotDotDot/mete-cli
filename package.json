@@ -1,15 +1,28 @@
 {
   "name": "mete-cli",
-  "version": "1.0.11",
-  "description": "Universal front-end cli, we just support react enviroment now",
+  "version": "1.0.12",
+  "description": "Universal front end cli, we just support react enviroment now, maybe support angular, vue and wechat miniprogram in the future",
   "bin": {
     "mete": "./bin/mete"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GoDotDotDot/mete-cli.git"
+  },
+  "keywords": [
+    "cli",
+    "react",
+    "webpack"
+  ],
   "sideEffects": [
     "*.css"
   ],
-  "author": "KUICHU",
+  "author": "GoDotDotDot",
   "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/GoDotDotDot/mete-cli/issues"
+  },
+  "homepage": "https://github.com/GoDotDotDot/mete-cli#readme",
   "dependencies": {
     "@babel/cli": "^7.1.0",
     "@babel/core": "^7.1.0",

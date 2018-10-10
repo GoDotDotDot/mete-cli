@@ -19,12 +19,12 @@ i18n
     },
     resources: {
       en: {
-        pages: require('./locales/en/pages.json'),
-        global: require('./locales/en/global.json'),
+        pages: require('./locales/en/pages.json'), // eslint-disable-line
+        global: require('./locales/en/global.json'), // eslint-disable-line
       },
       zh: {
-        pages: require('./locales/zh/pages.json'),
-        global: require('./locales/zh/global.json'),
+        pages: require('./locales/zh/pages.json'), // eslint-disable-line
+        global: require('./locales/zh/global.json'), // eslint-disable-line
       },
     },
     react: {

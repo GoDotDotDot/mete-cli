@@ -145,7 +145,7 @@ class AppLayout extends React.Component {
             <Footer style={{ textAlign: 'center' }}>
               Mete Design ©2017 Created By Mete Design Group | More Be Found In
               {' '}
-              <a href="https://github.com/GoDotDotDot/mete-boilerplate">Github</a>
+              <a href="https://github.com/GoDotDotDot/mete-cli">Github</a>
             </Footer>
           </Layout>
         </Layout>

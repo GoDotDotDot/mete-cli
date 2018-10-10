@@ -1,9 +1,10 @@
 <div align="center">
   <!-- replace with accurate logo e.g from https://worldvectorlogo.com/ -->
-  <img width="200" height="200" src="https://cdn.rawgit.com/standard/standard/master/sticker.svg">
+  <img width="200" height="200" src="./logo.png">
   </a>
   <h1>mete-cli</h1>
 </div>
+
 [![npm version](https://img.shields.io/npm/v/mete-cli.svg)](https://www.npmjs.com/package/mete-cli) [![npm downloads](https://img.shields.io/npm/dt/mete-cli.svg)](https://npm-stat.com/charts.html?package=mete-cli) [![Github All Releases](https://img.shields.io/github/downloads/godotdotdot/mete-cli/total.svg)](https://github.com/GoDotDotDot/mete-cli/releases)
 
 Universal front-end cli, we just support react enviroment now.

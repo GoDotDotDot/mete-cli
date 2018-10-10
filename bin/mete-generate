@@ -1,0 +1,58 @@
+#!/usr/bin/env node
+const { resolve, join } = require('path');
+const parseArgs = require('minimist');
+const chalk = require('chalk');
+const signale = require('signale');
+const { existsSync, mkdirSync, rmdirSync } = require('fs'); 
+const fs = require('fs-extra')
+const {spawn} = require('cross-spawn');
+const {BUILD_DIR} = require('../lib/constants')
+const argv = parseArgs(process.argv.slice(2), {
+  alias: {
+    h: 'help',
+  },
+  boolean: ['h']
+});
+
+if (argv.help) {
+  console.log(`
+  Description:
+    gennerate code snippets.
+
+  Available genneraters:
+    component
+    container
+    language
+
+  Usage
+    ${chalk.bgBlue('$ mete gennearate <gennerate>')}
+
+  <gennerate> which gennerates you want.
+  If no gennerate is provided, it will show gennerates list we support and you can choose one.
+  `);
+  process.exit(0);
+}
+
+const gennearate = argv._[0];
+
+const plopfile = resolve(__dirname, '../scripts/generators/index.js');
+const proc = spawn('plop', ['--plopfile', plopfile, gennearate || ''], {
+  stdio: 'inherit',
+});
+proc.on('close', (code, signal) => {
+  if (code !== null) {
+    process.exit(code);
+  }
+  if (signal) {
+    if (signal === 'SIGKILL') {
+      process.exit(137);
+    }
+    console.log(`got signal ${signal}, exiting`);
+    process.exit(signal === 'SIGINT' ? 0 : 1);
+  }
+  process.exit(0);
+});
+proc.on('error', (err) => {
+  console.error(err);
+  process.exit(1);
+});

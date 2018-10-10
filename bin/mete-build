@@ -1,0 +1,55 @@
+#!/usr/bin/env node
+const { resolve, join } = require("path");
+const parseArgs = require("minimist");
+const chalk = require('chalk');
+const signale = require('signale');
+const { existsSync, mkdirSync, rmdirSync } = require('fs'); 
+const fs = require('fs-extra')
+const {spawn} = require("cross-spawn");
+const {BUILD_DIR} = require('../lib/constants')
+const argv = parseArgs(process.argv.slice(2), {
+  alias: {
+    h: "help",
+  },
+  boolean: ["h"]
+});
+
+if (argv.help) {
+  console.log(`
+  Description
+    Compiles the application for production deployment
+
+  Usage
+    ${chalk.bgBlue('$ mete build <folder name>')}
+
+  <folder name> represents where the compiled dist folder should go in the current directory.
+  If no folder name is provided, the dist folder will be created in the current directory.
+  `);
+  process.exit(0);
+}
+
+const foldername = resolve(argv._[0] || BUILD_DIR)
+
+if (existsSync(foldername)) {
+  signale.warn(`Cleanning...
+  `)
+  fs.remove(foldername)
+} else {
+  signale.warn(`No such directory exists : ${foldername}, it will be created automated.`);
+  signale.start(`Creatting directory: ${foldername}`);
+  try{
+    mkdirSync(foldername)
+  } catch(err){
+    signale.error(`Failed to creat at ${foldername}`);
+    process.exit(1);
+  }
+}
+
+const {build} = require('../lib/build-utils/webpack');
+signale.await(`Buildding in to ${foldername}
+`)
+
+// "cross-env NODE_ENV=production webpack --profile --config config/webpack/webpack.prod.babel.js --color -p --progress --hide-modules --display-optimization-bailout"
+build(foldername);
+
+

@@ -1,0 +1,43 @@
+#root,.cus-sider{
+    height: 100%;
+}
+.cus-sider {
+    background: #001529;
+    box-shadow: 2px 0 6px rgba(0, 21, 41, 0.35);
+    .logo {
+        background: #002140;
+        height: 64px;
+        line-height: 64px;
+        h1 {
+            white-space: nowrap;
+            color: #fff;
+            display: inline-block;
+            vertical-align: middle;
+            font-size: 20px;
+            margin:0;
+            margin-left: 20px;
+            font-family: 'Myriad Pro', 'Helvetica Neue', Arial, Helvetica, sans-serif;
+            font-weight: 600;
+        }
+    }
+    .menu {
+        background: #001529
+    }
+    .sub-menu {
+        background: #000c17
+    }
+    .ant-menu-dark .ant-menu-inline.ant-menu-sub {
+        background: #000c17;
+    }
+}
+
+.ant-layout-sider-children{
+    position: fixed;
+    transition: all .2s;
+    width: 250px;
+}
+.ant-layout-sider-collapsed{
+    .ant-layout-sider-children{
+        width: 0px
+    }
+}

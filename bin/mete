@@ -1,0 +1,168 @@
+#!/usr/bin/env node
+const path = require('path');
+const { spawn } = require('cross-spawn');
+const signale = require('signale');
+
+// const  pkg  =  require('../../package.json'; // 相对 dist 文件夹，项目需要打包到dis)t
+const { CONFIG_FILE, ESLINT_FILE } = require('../lib/constants');
+const actionList = require('../lib/bin/action');
+// const utils = require('../lib/utils');
+
+const { join } = path;
+
+let meteCli = {};
+const defaultCommand = 'dev';
+const commands = {
+  'init': {
+    'description': 'Init an new project.',
+  },
+  'build': {
+    'description': 'Production build.',
+  },
+  'start': {
+    'description': 'Start mete project in production.',
+  },
+  'generate': {
+    'description': 'Generate code sinppest'
+  },
+  'dll': {
+    'description': 'Generate dll files'
+  },
+  [defaultCommand]: {
+    'description': 'Start mete project in development (default).',
+  },
+}
+
+const options = {
+  '--help': {
+    'description': 'List usage.',
+    'action': function () {
+      actionList.help(meteCli)
+    }
+  },
+  '-h': {
+    'description': 'Same to --help.',
+    'action': function (params) {
+      actionList.help(meteCli)      
+    }
+  },
+  '--version': {
+    'description': 'Output current version.',
+    'action': function (params) {
+      actionList.version();
+    }
+  },
+  '-v': {
+    'description': 'Same to --version',
+    'action': function (params) {
+      actionList.version();
+    }
+  },
+}
+
+/**
+ * init: init a new project
+ * build: production build
+ * start: start mete project in production
+ * dev: start mete project in development (default)
+ */
+
+let cmd = process.argv[2];
+let args = [];
+let nodeArgs = [];
+let bin;
+
+const inspectArg = process.argv.find(arg => arg.includes('--inspect'));
+if (inspectArg) {
+  nodeArgs.push(inspectArg);
+}
+
+const defaultEnv = cmd === 'dev' ? 'development' : 'production';
+process.env.NODE_ENV = process.env.NODE_ENV || defaultEnv;
+
+meteCli = {
+  options,
+  commands,
+  nodeArgs,
+  args
+}
+
+// options call
+if (options[cmd]) {
+  options[cmd].action();
+  process.exit(0);
+}
+
+
+// commands call
+if (commands[cmd]) {
+  args = process.argv.slice(3);
+  bin = join(__dirname, 'mete-' + cmd);
+} else {
+  cmd = defaultCommand;
+  args = process.argv.slice(2);
+  signale.warn(cmd + ' is not support cmmand! we will use mete dev altertive!')
+  bin = join(__dirname, 'mete-dev');
+}
+
+const startProcess = () => {
+  const proc = spawn('node', [...nodeArgs, ...[bin], ...args], {
+    stdio: 'inherit',
+  });
+  // utils.clearTerminal()
+  proc.on('close', (code, signal) => {
+    if (code !== null) {
+      process.exit(code);
+    }
+    if (signal) {
+      if (signal === 'SIGKILL') {
+        process.exit(137);
+      }
+      console.log(`got signal ${signal}, exiting`);
+      process.exit(signal === 'SIGINT' ? 0 : 1);
+    }
+    process.exit(0);
+  });
+  proc.on('error', err => {
+    console.error(err);
+    process.exit(1);
+  });
+  return proc;
+};
+
+let proc = startProcess();
+
+const wrapper = () => {
+  if (proc) {
+    proc.kill();
+  }
+};
+process.on('SIGINT', wrapper);
+process.on('SIGTERM', wrapper);
+process.on('exit', wrapper);
+
+if (cmd === 'dev') {
+  const { watchFile } = require('fs');
+  watchFile(`${process.cwd()}/${CONFIG_FILE}`, (cur, prev) => {
+    if (cur.size > 0 || prev.size > 0) {
+      console.log(
+        `\n> Found a change in ${CONFIG_FILE}, restarting the server...`
+      );
+      // Don't listen to 'close' now since otherwise parent gets killed by listener
+      proc.removeAllListeners('close');
+      proc.kill();
+      proc = startProcess();
+    }
+  });
+  watchFile(`${process.cwd()}/${ESLINT_FILE}`, (cur, prev) => {
+    if (cur.size > 0 || prev.size > 0) {
+      console.log(
+        `\n> Found a change in ${ESLINT_FILE}, restarting the server...`
+      );
+      // Don't listen to 'close' now since otherwise parent gets killed by listener
+      proc.removeAllListeners('close');
+      proc.kill();
+      proc = startProcess();
+    }
+  });
+}

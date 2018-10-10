@@ -1,0 +1,61 @@
+#!/usr/bin/env node
+const { resolve } = require('path');
+const parseArgs = require('minimist');
+const chalk = require('chalk');
+const fs = require('fs-extra');
+
+const argv = parseArgs(process.argv.slice(2), {
+  alias: {
+    h: 'help',
+  },
+  boolean: ['h'],
+});
+
+if (argv.help) {
+  console.log(`
+      Description
+        Creat an new project.
+  
+      Usage
+        ${chalk.bgBlue(' $ mete init <project name> ')}
+      
+      Examples
+        ${chalk.bgBlue(' $ mete init my-app ')}
+  
+      Options
+        --help, -h      Displays this message
+    `);
+  process.exit(0);
+}
+
+const projectName = argv._[0] || 'mete-app';
+const projectDir = resolve(process.cwd(), projectName)
+fs.copy(resolve(__dirname, '../templates/react/'), projectDir)
+  .then(() => {
+    console.log(`
+    ${chalk.green('Init Successful!')}
+    The new project directory is: ${chalk.yellow(resolve(process.cwd(), projectName))} 
+    Usage:
+      $ cd ${projectName}
+      $ npm install or yarn
+      $ npm start or yarn start
+    Help：
+      $ mete -h
+    `);
+    try {
+      const pkg = fs.readJsonSync(resolve(process.cwd(), projectName, 'package.json'));
+      pkg.name = projectName;
+      fs.outputJsonSync(resolve(projectDir, './package.json'), pkg);
+    } catch (err) {
+      console.log(`
+      ${chalk.red('edit the name of package.json failed!')}
+      `);
+      console.error(err);
+    }
+  })
+  .catch((err) => {
+    console.log(`
+    ${chalk.red('Init Failed!')}
+    `);
+    console.error(err);
+  });

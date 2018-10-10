@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+const { resolve, join } = require("path");
+const parseArgs = require("minimist");
+const chalk = require('chalk');
+const signale = require('signale');
+const fs = require('fs-extra')
+const {spawn} = require("cross-spawn");
+
+const argv = parseArgs(process.argv.slice(2), {
+  alias: {
+    h: "help",
+  },
+  boolean: ["h"]
+});
+
+if (argv.help) {
+  console.log(`
+  Description
+    Compiles the application for dll
+
+  Usage
+    ${chalk.bgBlue('$ mete dll')}
+  `);
+  process.exit(0);
+}
+
+require('../scripts/dll')();
+

@@ -15,6 +15,15 @@ Universal front-end cli, we just support react enviroment now.
 - Code Splitting
 - i18n
 - Decorator Support
+- react-erro-overlay support
+- Auto restart server after modified config(mete.config.js and .eslintrc)
+- HMR support
+- Custom webpack, eslint, babel config support
+- Redux ecosystem support
+- Displaying lint output in the editor
+- Sass support
+- Less support
+
 
 ## TODO:
 - 自动安装缺失依赖
@@ -22,6 +31,7 @@ Universal front-end cli, we just support react enviroment now.
 - 自动选择端口
 - 升级postcss-prese-env
 - 升级browserlist 到3
+- init 项目先检查是否存在该文件夹
 
 ## Getting Started
 
@@ -61,7 +71,11 @@ $ mete dev
 
 ### Production Environment
 
-waiting...
+```shell
+$ mete build [dir]
+```
+
+the default dir is dist.
 
 ### DLL Build
 
@@ -78,12 +92,54 @@ Just use
 ```shell
 $ mete generate
 ```
-if something ok, you will see the list of generators.
+If something ok, you will see the list of generators.
+
+## More
+
+Show more usage.
+
+```shell
+$ mete -h
+```
+
+## Custom Config
+
+For custom advanced behavior of mete, you can create a `mete.config.js` in the root of your project directory (next to `app` and `package.json`).
+
+ `mete.config.js` is a regular Node.js module, not a JSON file. It gets used by the mete dev server and build phases, and not included in the browser build.
+
+### Custom webpack config
+
+In order to extend our usage of `webpack`, you can define a function that extends its config via `mete.config.js`.
+
+**Example:**
+
+use a function:
+
+```
+// Example mete.config.js for adding a loader that depends on babel-loader
+module.exports = {
+  webpack: (config, {}) => {
+    config.module.rules.push({
+      test: /\.scss/,
+      loader: 'scss-loader'
+    })
+
+    return config
+  }
+}
+```
+
+### Customizing babel config
+
+In order to extend our usage of `babel`, you can simply edit a `.babelrc` file at the root of your app mete had provided. 
+
+### Customizing eslint config
+
+In order to extend our usage of `eslint`, you can simply edit a `.eslintrc` file at the root of your app mete had provided. 
 
 ## Project Structure
 
-
-
-
+![image-20181010142046415](./structure.png)
 
 

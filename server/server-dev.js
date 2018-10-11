@@ -2,11 +2,8 @@ const path = require("path");
 const webpack = require("webpack");
 const webpackDevMiddleware = require("webpack-dev-middleware");
 const webpackHotMiddleware = require("webpack-hot-middleware");
-const chalk = require("chalk");
 const devServerUtils = require('../lib/dev-utils/webpackDevServerUtils')
 const errorOverlayMiddleware = require('../lib/dev-utils/error-overlay-middleware');
-const { clearTerminal } = require("../lib/utils");
-const showServerInfo = require("../lib/dev-utils/showServerInfo");
 
 function createWebpackMiddleware(compiler, publicPath) {
   return webpackDevMiddleware(compiler, {
@@ -27,6 +24,7 @@ module.exports = function serverDev(app, webpackConfig, port, host) {
 
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler, {
+    path: '/__webpack_hmr',
     overlay:true,
     log:false
   }));

@@ -15,7 +15,7 @@ const pkg = require(path.resolve(process.cwd(), "package.json"));
 const dllPlugin = pkg.dllPlugin;
 
 const hotEntry = [
-  // "webpack-hot-middleware/client",
+  require.resolve("webpack-hot-middleware/client"),
   require.resolve("eventsource-polyfill") // Necessary for hot reloading with IE
 ];
 

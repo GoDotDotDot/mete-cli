@@ -25,8 +25,7 @@ module.exports = function serverDev(app, webpackConfig, port, host) {
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler, {
     path: '/__webpack_hmr',
-    overlay:true,
-    log:false
+    log: false
   }));
 
   // Since webpackDevMiddleware uses memory-fs internally to store build

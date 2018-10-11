@@ -23,7 +23,7 @@ Universal front-end cli, we just support react enviroment now.
 - Displaying lint output in the editor
 - Sass support
 - Less support
-
+- Launch editor support (Please sure that editor command has been intalled in PATH)
 
 ## TODO:
 - 自动安装缺失依赖

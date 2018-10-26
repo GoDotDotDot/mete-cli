@@ -1,5 +1,6 @@
 const chalk = require('chalk');
 const serverDev = require('./server-dev');
+const serverProd = require('./server-prod');
 const webpackBuild = require('../lib/build-utils/webpack')
 
 const CONFIG_FILE = require('../lib/constants');
@@ -14,10 +15,7 @@ module.exports = (app, dev,port,host) => {
     }
     serverDev(app,webpackConfig,port,host)
   } else {
-    
-    const webpackConfig = require('../../config/webpack/webpack.dev.babel')
-    const addDevMiddlewares = require('./addDevMiddlewares')
-    addDevMiddlewares(app, webpackConfig,port,host)
+    serverProd(app, webpackConfig, port, host)
   }
 
   return app

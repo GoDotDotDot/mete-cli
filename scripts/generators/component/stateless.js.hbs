@@ -5,13 +5,10 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
-// import styled from 'styled-components';
-
-{{#if wantMessages}}
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+{{#if wantI18n}}
+import { translate } from 'react-i18next';
 {{/if}}
+import PropTypes from 'prop-types';
 
 function {{ properCase name }}() {
   return (
@@ -25,4 +22,8 @@ function {{ properCase name }}() {
 
 {{ properCase name }}.propTypes = {};
 
-export default {{ properCase name }};
+{{#if wantI18n}}
+export default translate('global')({{ properCase name }});
+{{else}}
+export default {{properCase name}}
+{{else}}

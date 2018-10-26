@@ -19,7 +19,13 @@ module.exports = require('./webpack.base')({
   // In production, we skip all hot-reloading stuff
   entry: {
     react_vendor: ['react', 'react-dom', 'react-router-dom'],
-    redux_vendor: ['react-redux', 'redux', 'redux-immutable', 'redux-saga', 'immutable'],
+    redux_vendor: [
+      'react-redux',
+      'redux',
+      'redux-immutable',
+      'redux-saga',
+      'immutable',
+    ],
     app: path.join(process.cwd(), 'app/app.js'),
     // login: [ ...hotEntry, path.join(process.cwd(), 'app/pages/Login/index.js') ]
   },
@@ -33,6 +39,12 @@ module.exports = require('./webpack.base')({
   mode: 'production',
   module: {
     rules: [
+      {
+        // Preprocess 3rd party .css files located in node_modules
+        test: /\.css$/,
+        include: /node_modules/,
+        use: [MiniCssExtractPlugin.loader, require.resolve('css-loader')],
+      },
       {
         test: /\.css$/,
         exclude: /node_modules/,
@@ -52,7 +64,6 @@ module.exports = require('./webpack.base')({
         test: /\.scss$/,
         exclude: /node_modules/,
         use: [
-          // {loader: 'autoprefixer-loader'},
           MiniCssExtractPlugin.loader,
           {
             loader: require.resolve('css-loader'),
@@ -72,7 +83,7 @@ module.exports = require('./webpack.base')({
             options: {
               // outputStyle: 'collapsed',
               sourceMap: false,
-              includePaths: ['app'],
+              includePaths: [path.resolve(workingPath, 'app')],
             },
           },
         ],
@@ -100,14 +111,14 @@ module.exports = require('./webpack.base')({
             options: {
               // outputStyle: 'collapsed',
               modifyVars: themeVariables,
-              sourceMap: true,
+              sourceMap: false,
               includePaths: [path.resolve(workingPath, 'app')],
             },
           },
         ],
       },
       {
-        test: /\.(png|svg|jpg|gif|ico)$/,
+        test: /\.(png|jpg|gif|ico)$/,
         use: [
           {
             loader: require.resolve('url-loader'),
@@ -160,7 +171,7 @@ module.exports = require('./webpack.base')({
     }),
     // Minify and optimize the index.html
     new HtmlWebpackPlugin({
-      template: 'app/templates/index.pro.html',
+      template: path.resolve(process.cwd(), './app/templates/index.pro.html'),
       minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -215,7 +226,8 @@ module.exports = require('./webpack.base')({
   ],
 
   performance: {
-    assetFilter: assetFilename => !/(\.map$)|(^(main\.|favicon\.))/.test(assetFilename),
+    assetFilter: assetFilename =>
+      !/(\.map$)|(^(main\.|favicon\.))/.test(assetFilename),
   },
   optimization: {
     minimize: true,

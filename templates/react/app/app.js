@@ -22,18 +22,18 @@ import App from './app.layout';
 
 // Load the favicon, the manifest.json file and the .htaccess file
 /* eslint-disable import/no-webpack-loader-syntax */
-import './asserts/images/favicon.ico';
-import './asserts/images/icon-72x72.png';
-import './asserts/images/icon-96x96.png';
-import './asserts/images/icon-120x120.png';
-import './asserts/images/icon-128x128.png';
-import './asserts/images/icon-144x144.png';
-import './asserts/images/icon-152x152.png';
-import './asserts/images/icon-167x167.png';
-import './asserts/images/icon-180x180.png';
-import './asserts/images/icon-192x192.png';
-import './asserts/images/icon-384x384.png';
-import './asserts/images/icon-512x512.png';
+import './assets/images/favicon.ico';
+import './assets/images/icon-72x72.png';
+import './assets/images/icon-96x96.png';
+import './assets/images/icon-120x120.png';
+import './assets/images/icon-128x128.png';
+import './assets/images/icon-144x144.png';
+import './assets/images/icon-152x152.png';
+import './assets/images/icon-167x167.png';
+import './assets/images/icon-180x180.png';
+import './assets/images/icon-192x192.png';
+import './assets/images/icon-384x384.png';
+import './assets/images/icon-512x512.png';
 import './manifest.json';
 // import 'file-loader?name=[name].[ext]!./.htaccess'; // eslint-disable-line import/extensions
 /* eslint-enable import/no-webpack-loader-syntax */

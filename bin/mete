@@ -16,6 +16,9 @@ const commands = {
   'init': {
     'description': 'Init an new project.',
   },
+  'prod': {
+    'description': 'Production server.',
+  },
   'build': {
     'description': 'Production build.',
   },

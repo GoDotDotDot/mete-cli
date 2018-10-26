@@ -1,0 +1,38 @@
+#!/usr/bin/env node
+const parseArgs = require('minimist');
+const chalk = require('chalk');
+const startServer = require('../server/index.js');
+
+const argv = parseArgs(process.argv.slice(2), {
+  alias: {
+    h: 'help',
+    H: 'hostname',
+    p: 'port',
+  },
+  boolean: ['h'],
+  string: ['H'],
+  default: { p: 3000 },
+});
+
+if (argv.help) {
+  console.log(`
+      Description
+        Starts the application in development mode (hot-code reloading, error
+        reporting, etc)
+  
+      Usage
+        ${chalk.bgBlue(' $ mete dev -p <port number> ')}
+      
+      Examples
+        ${chalk.bgBlue(' $ mete dev -p 3000 ')}
+  
+      Options
+        --port, -p      A port number on which to start the application, default 3000
+        --hostname, -H  Hostname on which to start the application
+        --help, -h      Displays this message
+    `);
+  process.exit(0);
+}
+
+const { port, hostname } = argv;
+startServer({ dev: false }, port, hostname);

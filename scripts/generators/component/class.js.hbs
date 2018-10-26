@@ -5,14 +5,12 @@
  */
 
 import React from 'react';
-// import PropTypes from 'prop-types';
-// import styled from 'styled-components';
-
 {{#if wantI18n}}
 import PropTypes from 'prop-types';
 import { translate } from 'react-i18next';
 
 {{/if}}
+// import PropTypes from 'prop-types';
 
 /* eslint-disable react/prefer-stateless-function */
 class {{ properCase name }} extends {{{ type }}} {
@@ -20,7 +18,12 @@ class {{ properCase name }} extends {{{ type }}} {
   static propTypes = {
     t: PropTypes.func.isRequired,
   }
+  {{else}}
+  static propTypes = {
+
+  }
   {{/if}}
+  
   render() {
     {{#if wantI18n}}
     const { t } = this.props;
@@ -34,8 +37,6 @@ class {{ properCase name }} extends {{{ type }}} {
     );
   }
 }
-
-{{ properCase name }}.propTypes = {};
 
 {{#if wantI18n}}
 export default translate('global')({{ properCase name }});

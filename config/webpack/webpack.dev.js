@@ -67,6 +67,12 @@ module.exports = require("./webpack.base")({
   module: {
     rules: [
       {
+        // Preprocess 3rd party .css files located in node_modules
+        test: /\.css$/,
+        include: /node_modules/,
+        use: [require.resolve('style-loader'), require.resolve('css-loader')],
+      },
+      {
         test: /\.css$/,
         exclude: /node_modules/,
         use: [
@@ -104,7 +110,7 @@ module.exports = require("./webpack.base")({
             options: {
               // outputStyle: 'collapsed',
               sourceMap: true,
-              includePaths: ["app"]
+              includePaths: [path.resolve(workingPath, 'app')]
             }
           }
         ]
@@ -132,14 +138,14 @@ module.exports = require("./webpack.base")({
             options: {
               // outputStyle: 'collapsed',
               modifyVars: themeVariables,
-              sourceMap: true
-              // includePaths: [path.resolve(workingPath, 'app')]
+              sourceMap: true,
+              includePaths: [path.resolve(workingPath, 'app')]
             }
           }
         ]
       },
       {
-        test: /\.(png|svg|jpg|gif|ico)$/,
+        test: /\.(png|jpg|gif|ico)$/,
         use: [
           {
             loader: require.resolve("url-loader"),

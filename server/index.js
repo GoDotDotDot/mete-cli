@@ -71,6 +71,6 @@ module.exports = function startServer(
         }
       );
     }
-    chalk.green('✔️ Start server successful!')
+    console.log(chalk.green(`✔️ Start server successful at: http://${host}:${port}`))
   });
 };

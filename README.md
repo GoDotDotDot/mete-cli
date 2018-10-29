@@ -40,6 +40,8 @@ Universal front-end cli, we just support react enviroment now.
 
 ```shell
 $ npm install -g mete-cli
+or 
+$ yarn global add mete-cli (recommend)
 ```
 
 ### Usage
@@ -69,14 +71,24 @@ Please run: mete dll
 ```Shell
 $ mete dev
 ```
+you can run `mete dev -h` for more help message.
 
-### Production Environment
+### Production Build Environment
 
 ```shell
 $ mete build [dir]
 ```
-
 the default dir is dist.
+
+you can run `mete build -h` for more help message.
+
+### Production Environment
+
+```shell
+$ mete prod [-H] [-p]
+```
+
+you can run `mete prod -h` for more help message.
 
 ### DLL Build
 
@@ -118,7 +130,7 @@ In order to extend our usage of `webpack`, you can define a function that extend
 use a function:
 
 ```
-// Example mete.config.js for adding a loader that depends on babel-loader
+// Example mete.config.js for adding a loader that depends on scss-loader
 module.exports = {
   webpack: (config, {}) => {
     config.module.rules.push({

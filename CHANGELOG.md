@@ -12,7 +12,7 @@
 
 - Add production server support.
 ```shell
-mete propd
+mete prod
 ```
 - Modify webpack config files.
 - Fixed webpack production build exception(lose some css).

@@ -105,6 +105,7 @@ if (commands[cmd]) {
   cmd = defaultCommand;
   args = process.argv.slice(2);
   signale.warn(cmd + ' is not support cmmand! we will use mete dev altertive!')
+  process.env.NODE_ENV = 'development';
   bin = join(__dirname, 'mete-dev');
 }
 

@@ -24,6 +24,8 @@ Universal front-end cli, we just support react enviroment now.
 - Sass support
 - Less support
 - Launch editor support (Please sure that editor command has been intalled in PATH)
+- Production server support
+- DLL support
 
 ## TODO:
 - 自动安装缺失依赖
@@ -31,7 +33,6 @@ Universal front-end cli, we just support react enviroment now.
 - 自动选择端口
 - 升级postcss-prese-env
 - 升级browserlist 到3
-- init 项目先检查是否存在该文件夹
 
 ## Getting Started
 

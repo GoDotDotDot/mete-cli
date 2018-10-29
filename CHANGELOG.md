@@ -17,3 +17,8 @@ mete propd
 - Modify webpack config files.
 - Fixed webpack production build exception(lose some css).
 
+## mete-cli v 1.0.25 (2018-10-26)
+
+### Bug
+
+- Fixed `NODE_ENV` value is `production` when run `mete`.

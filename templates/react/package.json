@@ -10,10 +10,7 @@
     "dll": "mete dll",
     "server": "mete server"
   },
-  "sideEffects": [
-    "*.css"
-  ],
-  "author": "KUICHU",
+  "author": "GoDotDotDot",
   "license": "MIT",
   "devDependencies": {
     "@babel/cli": "^7.1.0",

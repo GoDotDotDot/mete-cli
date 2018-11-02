@@ -1,4 +1,9 @@
-# mete-cli
+<div align="center">
+  <!-- replace with accurate logo e.g from https://worldvectorlogo.com/ -->
+  <img width="200" height="200" src="https://github.com/GoDotDotDot/mete-cli/raw/master/logo.png">
+  </a>
+  <h1>mete-cli</h1>
+</div>
 
 [![npm version](https://img.shields.io/npm/v/mete-cli.svg)](https://www.npmjs.com/package/mete-cli) [![npm downloads](https://img.shields.io/npm/dt/mete-cli.svg)](https://npm-stat.com/charts.html?package=mete-cli) [![Github All Releases](https://img.shields.io/github/downloads/godotdotdot/mete-cli/total.svg)](https://github.com/GoDotDotDot/mete-cli/releases)
 
@@ -18,7 +23,9 @@ Universal front-end cli, we just support react enviroment now.
 - Displaying lint output in the editor
 - Sass support
 - Less support
-
+- Launch editor support (Please sure that editor command has been intalled in PATH)
+- Production server support
+- DLL support
 
 ## TODO:
 - 自动安装缺失依赖
@@ -26,7 +33,6 @@ Universal front-end cli, we just support react enviroment now.
 - 自动选择端口
 - 升级postcss-prese-env
 - 升级browserlist 到3
-- init 项目先检查是否存在该文件夹
 
 ## Getting Started
 
@@ -34,6 +40,8 @@ Universal front-end cli, we just support react enviroment now.
 
 ```shell
 $ npm install -g mete-cli
+or 
+$ yarn global add mete-cli (recommend)
 ```
 
 ### Usage
@@ -63,14 +71,24 @@ Please run: mete dll
 ```Shell
 $ mete dev
 ```
+you can run `mete dev -h` for more help message.
 
-### Production Environment
+### Production Build Environment
 
 ```shell
 $ mete build [dir]
 ```
-
 the default dir is dist.
+
+you can run `mete build -h` for more help message.
+
+### Production Environment
+
+```shell
+$ mete prod [-H] [-p]
+```
+
+you can run `mete prod -h` for more help message.
 
 ### DLL Build
 
@@ -112,7 +130,7 @@ In order to extend our usage of `webpack`, you can define a function that extend
 use a function:
 
 ```
-// Example mete.config.js for adding a loader that depends on babel-loader
+// Example mete.config.js for adding a loader that depends on scss-loader
 module.exports = {
   webpack: (config, {}) => {
     config.module.rules.push({
@@ -133,6 +151,8 @@ In order to extend our usage of `babel`, you can simply edit a `.babelrc` file a
 
 In order to extend our usage of `eslint`, you can simply edit a `.eslintrc` file at the root of your app mete had provided. 
 
-<hr/>
+## Project Structure
 
-Power By [mete-cli](https://github.com/GoDotDotDot/mete-cli)
+![image-20181010142046415](https://github.com/GoDotDotDot/mete-cli/raw/master/structure.png)
+
+

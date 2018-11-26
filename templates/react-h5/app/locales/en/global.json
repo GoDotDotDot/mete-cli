@@ -1,0 +1,8 @@
+{
+  "lng": "en",
+  "menu": {
+      "home": "Home Page",
+      "page1": "Page1"
+  },
+  "defaultI18n": "Please set i18n text"
+}

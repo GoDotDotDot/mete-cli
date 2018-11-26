@@ -5,7 +5,6 @@ module.exports = ctx => ({
     'postcss-import': {},
     'postcss-nested': {},
     'postcss-plugin': {},
-    // cssnano: ctx.env === 'production' ? {} : false,
     autoprefixer: {},
   },
 });

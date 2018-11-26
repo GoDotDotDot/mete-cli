@@ -4,44 +4,66 @@ const parseArgs = require('minimist');
 const chalk = require('chalk');
 const fs = require('fs-extra');
 
+const TEMPLATE = ['react', 'react-h5'];
+
 const argv = parseArgs(process.argv.slice(2), {
   alias: {
     h: 'help',
+    temp: 'template',
   },
   boolean: ['h'],
+  default: {
+    temp: 'react',
+  },
 });
 
 if (argv.help) {
-  console.log(`
-      Description
+  console.log(`      Description
         Creat an new project.
   
       Usage
-        ${chalk.bgBlue(' $ mete init <project name> ')}
+        ${chalk.bgBlue(' $ mete init <project name> [--temp]')}
       
       Examples
-        ${chalk.bgBlue(' $ mete init my-app ')}
+        ${chalk.bgBlue(' $ mete init my-app --temp=react')}
   
       Options
         --help, -h      Displays this message
+        --temp          Specify the template, default is react. 
+                        Support list: ${chalk.green('[ react, react-h5 ]')}
     `);
   process.exit(0);
 }
 
-const projectName = argv._[0] || 'mete-app';
+if (!TEMPLATE.includes(argv.template)) {
+  console.log(`  ${chalk.red(`The template name "${
+    argv.template
+  }" doesn't exists! Please change your template name!
+  Support template: ${TEMPLATE.toString()}
+`)}
+    `);
+  process.exit(0);
+}
+
+const projectName = argv._[0] || `mete-${argv.template}-app`;
 const projectDir = resolve(process.cwd(), projectName);
 
-if(fs.existsSync(projectDir)){
+if (fs.existsSync(projectDir)) {
   console.log(`${chalk.red(`The project name "${projectName}" is exists!
 Please change your project name or delete the directory that same name to the project name you creat and retry !`)}
   `);
   process.exit(1);
 }
-fs.copy(resolve(__dirname, '../templates/react/'), projectDir, {filter: ()=>true})
+
+fs.copy(resolve(__dirname, `../templates/${argv.template}/`), projectDir, {
+  filter: () => true,
+})
   .then(() => {
     console.log(`
     ${chalk.green('Init Successful!')}
-    The new project directory is: ${chalk.yellow(resolve(process.cwd(), projectName))} 
+    The new project directory is: ${chalk.yellow(
+      resolve(process.cwd(), projectName),
+    )} 
     Usage:
       $ cd ${projectName}
       $ npm install or yarn
@@ -50,9 +72,14 @@ fs.copy(resolve(__dirname, '../templates/react/'), projectDir, {filter: ()=>true
       $ mete -h
     `);
     try {
-      const pkg = fs.readJsonSync(resolve(process.cwd(), projectName, 'package.json'));
+      // const pkg = fs.readJsonSync(resolve(process.cwd(), projectName, 'package.json'));
+      const pkg = require(resolve(process.cwd(), projectName, 'package.json'));
       pkg.name = projectName;
-      fs.outputJsonSync(resolve(projectDir, './package.json'), pkg);
+      fs.writeJsonSync(
+        resolve(process.cwd(), projectName, 'package.json'),
+        pkg,
+        { spaces: 2 },
+      );
     } catch (err) {
       console.log(`
       ${chalk.red('edit the name of package.json failed!')}
@@ -60,7 +87,7 @@ fs.copy(resolve(__dirname, '../templates/react/'), projectDir, {filter: ()=>true
       console.error(err);
     }
   })
-  .catch((err) => {
+  .catch(err => {
     console.log(`
     ${chalk.red('Init Failed!')}
     `);

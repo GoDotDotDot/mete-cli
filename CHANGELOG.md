@@ -54,6 +54,8 @@ mete init --temp=react-h5
 
 - Fixed .babelrc for antd error in react template.
 
+## mete-cli v 1.1.0 (2018-11-27)
 
+### Features
 
-
+- Add Immutable HOC that translate immutable data to raw JavaScript objects.

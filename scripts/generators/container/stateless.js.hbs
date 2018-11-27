@@ -5,35 +5,36 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 {{#if wantHeaders}}
 import { Helmet } from 'react-helmet';
 {{/if}}
-{{#if wantMessages}}
-import { FormattedMessage } from 'react-intl';
+{{#if wantI18n}}
+import { translate } from 'react-i18next';
+import PropTypes from 'prop-types';
 {{/if}}
+// import PropTypes from 'prop-types';
+import HOCImmutableToJS from 'components/HOCImmutableToJS';
 {{#if wantActionsAndReducer}}
-import { createStructuredSelector } from 'reselect';
+import injectReducer from 'utils/injectReducer';
 {{/if}}
-import { compose } from 'redux';
-
 {{#if wantSaga}}
 import injectSaga from 'utils/injectSaga';
 {{/if}}
+
 {{#if wantActionsAndReducer}}
-import injectReducer from 'utils/injectReducer';
-import makeSelect{{properCase name}} from './selectors';
+import { defaultAction, } from './action';
 import reducer from './reducer';
 {{/if}}
 {{#if wantSaga}}
 import saga from './saga';
 {{/if}}
-{{#if wantMessages}}
-import messages from './messages';
-{{/if}}
 
-function {{ properCase name }}() {
+function {{ properCase name }}(props) {
+  {{#if wantI18n}}
+  const { t } = props;
+  {{/if}}
   return (
     <div>
     {{#if wantHeaders}}
@@ -42,21 +43,27 @@ function {{ properCase name }}() {
         <meta name="description" content="Description of {{properCase name}}" />
       </Helmet>
     {{/if}}
-    {{#if wantMessages}}
-      <FormattedMessage {...messages.header} />
+    {{#if wantI18n}}
+      {t('defaultI18n')}
+      {{else}}
+      {{properCase name}} {{type}}
     {{/if}}
     </div>
   );
 }
 
+{{#if wantI18n}}
 {{ properCase name }}.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired,
 };
-
+{{else}}
+{{ properCase name }}.propTypes = {};
+{{/if}}
 {{#if wantActionsAndReducer}}
-const mapStateToProps = createStructuredSelector({
-  {{ lowerCase name }}: makeSelect{{properCase name}}(),
-});
+const mapStateToProps = (store) => {
+  const state = store.get('{{lowerCase name}}');
+  return {};
+};
 {{/if}}
 
 function mapDispatchToProps(dispatch) {
@@ -65,23 +72,34 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
+const WrapedHOCImmutableToJS = HOCImmutableToJS({{ properCase name }});
+
 {{#if wantActionsAndReducer}}
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
-
 const withReducer = injectReducer({ key: '{{ lowerCase name }}', reducer });
-{{else}}
-const withConnect = connect(null, mapDispatchToProps);
 {{/if}}
 {{#if wantSaga}}
-const withSaga = injectSaga({ key: '{{ lowerCase name }}', saga });
-{{/if}}
+const withSaga = injectSaga({ key: '{{lowerCase name}}', saga });
+ {{/if}}
 
-export default compose(
-{{#if wantActionsAndReducer}}
+{{#if wantI18n}}
+export default translate('global')(compose(
+  {{#if wantActionsAndReducer}}
   withReducer,
-{{/if}}
-{{#if wantSaga}}
+  {{/if}}
+  {{#if wantSaga}}
   withSaga,
-{{/if}}
+  {{/if}}
   withConnect,
-)({{ properCase name }});
+)(WrapedHOCImmutableToJS));
+{{else}}
+export default compose(
+  {{#if wantActionsAndReducer}}
+  withReducer,
+  {{/if}}
+  {{#if wantSaga}}
+  withSaga,
+  {{/if}}
+  withConnect,
+)(WrapedHOCImmutableToJS);
+{{/if}}

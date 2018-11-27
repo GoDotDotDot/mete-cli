@@ -49,7 +49,7 @@ $ yarn global add mete-cli (recommend)
 1. Create an new project
 
 ```shell
-$ mete init my-app
+$ mete init my-app --temp=react-h5
 ```
 
 2. Start in development 
@@ -64,7 +64,7 @@ Before starting your project, you should run `mete dll` for building dll files! 
 
 ```shell
 The following Webpack DLL manifest is missing: react_vendor_manifest.json
-Expected to find it in /Volumes/Mac2/CHUKUI/PROJECTS/mete-boilerplate/dll
+Expected to find it in /Volumes/Mac2/CHUKUI/PROJECTS/mete-react-app/dll
 Please run: mete dll
 ```
 

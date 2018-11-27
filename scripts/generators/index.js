@@ -9,12 +9,12 @@ const path = require('path');
 const { exec } = require('child_process');
 const componentGenerator = require('./component/index.js');
 const containerGenerator = require('./container/index.js');
-const languageGenerator = require('./language/index.js');
+// const languageGenerator = require('./language/index.js');
 
 module.exports = (plop) => {
   plop.setGenerator('component', componentGenerator);
   plop.setGenerator('container', containerGenerator);
-  plop.setGenerator('language', languageGenerator);
+  // plop.setGenerator('language', languageGenerator);
   plop.addHelper('directory', (comp) => {
     try {
       fs.accessSync(path.join(process.cwd(), `./app/containers/${comp}`), fs.F_OK);

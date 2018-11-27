@@ -5,37 +5,46 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
+import { compose } from 'redux';
 import { connect } from 'react-redux';
 {{#if wantHeaders}}
 import { Helmet } from 'react-helmet';
 {{/if}}
-{{#if wantMessages}}
-import { FormattedMessage } from 'react-intl';
+{{#if wantI18n}}
+import { translate } from 'react-i18next';
+import PropTypes from 'prop-types';
 {{/if}}
+// import PropTypes from 'prop-types';
+import HOCImmutableToJS from 'components/HOCImmutableToJS';
 {{#if wantActionsAndReducer}}
-import { createStructuredSelector } from 'reselect';
+import injectReducer from 'utils/injectReducer';
 {{/if}}
-import { compose } from 'redux';
-
 {{#if wantSaga}}
 import injectSaga from 'utils/injectSaga';
 {{/if}}
+
 {{#if wantActionsAndReducer}}
-import injectReducer from 'utils/injectReducer';
-import makeSelect{{properCase name}} from './selectors';
+import { defaultAction, } from './action';
 import reducer from './reducer';
 {{/if}}
 {{#if wantSaga}}
 import saga from './saga';
 {{/if}}
-{{#if wantMessages}}
-import messages from './messages';
-{{/if}}
 
 /* eslint-disable react/prefer-stateless-function */
 export class {{ properCase name }} extends {{{ type }}} {
+  {{#if wantI18n}}
+  static propTypes = {
+    t: PropTypes.func.isRequired,
+  }
+  {{else}}
+  static propTypes = { }
+  {{/if}}
+
   render() {
+    {{#if wantI18n}}
+    const { t } = this.props;
+    {{/if}}
     return (
       <div>
       {{#if wantHeaders}}
@@ -44,22 +53,21 @@ export class {{ properCase name }} extends {{{ type }}} {
           <meta name="description" content="Description of {{properCase name}}" />
         </Helmet>
       {{/if}}
-      {{#if wantMessages}}
-        <FormattedMessage {...messages.header} />
+      {{#if wantI18n}}
+        {t('defaultI18n')}
+      {{else}}
+        {{properCase name}} {{type}}
       {{/if}}
       </div>
     );
   }
 }
 
-{{ properCase name }}.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-};
-
 {{#if wantActionsAndReducer}}
-const mapStateToProps = createStructuredSelector({
-  {{ lowerCase name }}: makeSelect{{properCase name}}(),
-});
+const mapStateToProps = (store) => {
+  const state = store.get('{{lowerCase name}}');
+  return {};
+};
 {{/if}}
 
 function mapDispatchToProps(dispatch) {
@@ -68,20 +76,27 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-{{#if wantActionsAndReducer}}
-const withConnect = connect(
-  mapStateToProps,
-  mapDispatchToProps
-);
+const WrapedHOCImmutableToJS = HOCImmutableToJS({{ properCase name }});
 
-const withReducer = injectReducer({ key: '{{ camelCase name }}', reducer });
-{{else}}
-const withConnect = connect(null, mapDispatchToProps);
+{{#if wantActionsAndReducer}}
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+const withReducer = injectReducer({ key: '{{ lowerCase name }}', reducer });
 {{/if}}
 {{#if wantSaga}}
-const withSaga = injectSaga({ key: '{{ camelCase name }}', saga });
-{{/if}}
+const withSaga = injectSaga({ key: '{{lowerCase name}}', saga });
+ {{/if}}
 
+{{#if wantI18n}}
+export default translate('global')(compose(
+{{#if wantActionsAndReducer}}
+  withReducer,
+{{/if}}
+{{#if wantSaga}}
+  withSaga,
+{{/if}}
+  withConnect,
+)(WrapedHOCImmutableToJS));
+{{else}}
 export default compose(
 {{#if wantActionsAndReducer}}
   withReducer,
@@ -89,5 +104,6 @@ export default compose(
 {{#if wantSaga}}
   withSaga,
 {{/if}}
-  withConnect
-)({{ properCase name }});
+  withConnect,
+)(WrapedHOCImmutableToJS);
+{{/if}}

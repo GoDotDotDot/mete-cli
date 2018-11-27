@@ -71,3 +71,10 @@ mete init --temp=react-h5
 ### Bug
 
 - Fixed generate error when use stateless function component.
+
+## mete-cli v 1.1.2 (2018-11-27)
+
+### Bug
+
+- Fixed generater of containers components error and format the generater templates.
+

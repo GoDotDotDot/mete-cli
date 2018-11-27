@@ -22,9 +22,6 @@ const commands = {
   'build': {
     'description': 'Production build.',
   },
-  'start': {
-    'description': 'Start mete project in production.',
-  },
   'generate': {
     'description': 'Generate code sinppest'
   },

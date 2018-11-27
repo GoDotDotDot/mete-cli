@@ -59,3 +59,15 @@ mete init --temp=react-h5
 ### Features
 
 - Add Immutable HOC that translate immutable data to raw JavaScript objects.
+
+## mete-cli v 1.1.1 (2018-11-27)
+
+### Features
+
+- Add publicPath prefix with dot detect in the webpack config.
+- The root directory of static file serve in production server will read from publick path in the webpack config file.
+- The target root directory of building mode will read from output.path in the webpack config file.
+
+### Bug
+
+- Fixed generate error when use stateless function component.

@@ -2,11 +2,9 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const OfflinePlugin = require('offline-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const StatsPlugin = require('stats-webpack-plugin');
 const fs = require('fs');
-const { BUILD_DIR } = require('../../lib/constants');
 
 const workingPath = process.cwd();
 const lessToJs = require('less-vars-to-js');

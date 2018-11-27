@@ -3,7 +3,6 @@
  */
 
 const path = require('path');
-const fs = require('fs');
 const webpack = require('webpack');
 const { BUILD_DIR } = require('../../lib/constants');
 // Remove this line once the following warning goes away (it was meant for webpack loader authors not users):

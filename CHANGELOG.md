@@ -78,3 +78,9 @@ mete init --temp=react-h5
 
 - Fixed generater of containers components error and format the generater templates.
 
+## mete-cli v 1.1.3 (2018-11-27)
+
+### Bug
+
+- Fixed generater of components error.
+

@@ -1,6 +1,6 @@
 {
   "name": "mete-cli",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "Universal front end cli, we just support react enviroment now, maybe support angular, vue and wechat miniprogram in the future",
   "bin": {
     "mete": "./bin/mete"

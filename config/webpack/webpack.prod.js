@@ -32,7 +32,7 @@ module.exports = require('./webpack.base')({
   output: {
     filename: 'js/[name]-[chunkhash].bundle.js',
     chunkFilename: 'js/[id]-[chunkhash].bundle.js',
-    publicPath: './',
+    publicPath: '/',
   },
   mode: 'production',
   module: {

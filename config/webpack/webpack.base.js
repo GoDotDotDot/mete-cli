@@ -33,9 +33,6 @@ module.exports = options => ({
         enforce: 'pre',
         exclude: /node_modules/,
         loader: require.resolve('eslint-loader'),
-        options: {
-          // eslintPath: path.resolve(process.cwd(), '.eslintrc')
-        }
       },
       {
         test: /\.(js|jsx)$/, // Transform all .js files required somewhere with Babel

@@ -65,7 +65,8 @@
     "redux-immutable": "4.0.0",
     "redux-saga": "0.16.0",
     "sanitize.css": "5.0.0",
-    "styled-components": "2.4.0"
+    "styled-components": "2.4.0",
+    "with-immutable": "1.1.0"
   },
   "peerDependencies": {
     "react": "^16.0.0",

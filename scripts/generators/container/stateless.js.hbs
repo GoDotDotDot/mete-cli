@@ -15,7 +15,7 @@ import { translate } from 'react-i18next';
 import PropTypes from 'prop-types';
 {{/if}}
 // import PropTypes from 'prop-types';
-import HOCImmutableToJS from 'components/HOCImmutableToJS';
+import withImmutable from 'with-immutable';
 {{#if wantActionsAndReducer}}
 import injectReducer from 'utils/injectReducer';
 {{/if}}
@@ -72,7 +72,6 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-const WrapedHOCImmutableToJS = HOCImmutableToJS({{ properCase name }});
 
 {{#if wantActionsAndReducer}}
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
@@ -91,7 +90,8 @@ export default translate('global')(compose(
   withSaga,
   {{/if}}
   withConnect,
-)(WrapedHOCImmutableToJS));
+  withImmutable,
+)({{ properCase name }}));
 {{else}}
 export default compose(
   {{#if wantActionsAndReducer}}
@@ -101,5 +101,6 @@ export default compose(
   withSaga,
   {{/if}}
   withConnect,
-)(WrapedHOCImmutableToJS);
+  withImmutable,
+)({{ properCase name }});
 {{/if}}

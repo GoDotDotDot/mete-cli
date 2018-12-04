@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import injectReducer from 'utils/injectReducer';
 import injectSaga from 'utils/injectSaga';
 import { translate } from 'react-i18next';
-import HOCImmutableToJS from 'components/HOCImmutableToJS';
+import withImmutable from 'with-immutable';
 import {
   Input, Button, List, Spin, Icon,
 } from 'antd';
@@ -107,5 +107,6 @@ export default translate('pages')(
     withReducer,
     withSaga,
     withConnect,
-  )(HOCImmutableToJS(HomePage)),
+    withImmutable,
+  )(HomePage),
 );

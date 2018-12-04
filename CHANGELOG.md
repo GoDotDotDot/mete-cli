@@ -84,3 +84,11 @@ mete init --temp=react-h5
 
 - Fixed generater of components error.
 
+## mete-cli v 1.2.0 (2018-12-04)
+
+### Features
+
+- Locked the version of dependencies in templates.
+- Replace HOCImmutable component with [with-immutable](https://github.com/GoDotDotDot/with-immutable) lib.
+
+
